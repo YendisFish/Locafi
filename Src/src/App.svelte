@@ -1,6 +1,12 @@
 <script>
 	import PlayBar from './Components/PlayBar.svelte';
 	import MainPage from './Components/MainPage.svelte'
+
+	let inSettings = false;
+	
+	function toggleSettings() {
+		inSettings = !inSettings;
+	}
 </script>
 
 <main>

@@ -1,4 +1,4 @@
-﻿<script lang="ts">
+﻿<script>
     let isPlaying = false;
     
     function togglePlay() {
@@ -25,10 +25,10 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     
     <div style="padding: 5px">
-    {#if isPlaying}
+        {#if isPlaying}
         <i on:click="{togglePlay}" class='bx bx-pause-circle bx-md color-green'></i>
-    {:else}
+        {:else}
         <i on:click="{togglePlay}" class='bx bx-play-circle bx-md color-green'></i>
-    {/if}
+        {/if}
     </div>    
 </div>
