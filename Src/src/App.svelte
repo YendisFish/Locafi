@@ -1,9 +1,12 @@
 <script>
 	import PlayBar from './Components/PlayBar.svelte';
+	import MainPage from './Components/MainPage.svelte'
 </script>
 
 <main>
 	<script src="app://dynamic.js"></script>
+	
+	<MainPage></MainPage>
 	
 	<div class="playbar">
 		<PlayBar></PlayBar>
