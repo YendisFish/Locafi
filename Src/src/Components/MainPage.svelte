@@ -1,6 +1,6 @@
 ﻿<script>
     let currentPlaylist = "";
-    let songList = [ { name:"Some Song", path:"./someplaylist" }, { name:"Other Song", path:"./someplaylist"}];
+    let songList = [ { name:"Some Song", path:"./someplaylist" }, { name:"Other Song", path:"./someplaylist"} ];
     
     function setAndGetPlaylist(playlist) {
         currentPlaylist = playlist;
@@ -30,18 +30,16 @@
 
     /* Apply styles to table headers */
     th {
-        padding: 8px; /* Add padding to header cells */
+        padding: 8px 50px 8px 50px; /* Add padding to header cells */
         text-align: left; /* Align text to the left */
-        padding-left: 50px;
-        padding-right: 50px;
     }
 
     /* Apply styles to table data cells */
     td {
-        padding: 8px; /* Add padding to header cells */
+        padding: 8px 50px 8px 50px; /* Add padding to header cells */
         text-align: left; /* Align text to the left */
-        padding-left: 50px;
-        padding-right: 50px;
+        /*padding-left: 50px;
+        padding-right: 50px;*/
     }
 
     /* Apply alternate background color to even rows */
