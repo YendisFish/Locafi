@@ -1,9 +1,14 @@
 ﻿<script>
+    import axios from "axios";
+    import DownloadMenu from './DownloadMenu.svelte';
+
+    let mode = "DEFAULT";
+    let addSong = false;
+    
     let currentPlaylist = "";
     let songList = [ { name:"Some Song", path:"./someplaylist" }, { name:"Other Song", path:"./someplaylist"} ];
     
     function setAndGetPlaylist(playlist) {
-        
         currentPlaylist = playlist;
     }
 </script>
@@ -14,6 +19,7 @@
         height: 100vh;
         width: 60vw;
         display: flex; /* Use flexbox for centering */
+        flex-direction: column;
         margin: 0 auto; /* Center the container horizontally */
         padding-left: 15px;
     }
@@ -56,12 +62,24 @@
     .song:nth-child(even) {
         background-color: #202123;
     }
+
+    .download-menu {
+        padding: 8px 50px 8px 50px;
+    }
 </style>
 
 <div class="main-page">
-    <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-
+    
+    <div class="download-menu">
+        {#if addSong}
+            <DownloadMenu />
+            <button on:click={() => addSong = !addSong}>Cancel</button>
+        {:else}
+            <button on:click={() => addSong = !addSong} style="margin-top: 15px">Add Song</button>
+        {/if}
+    </div>
+    
     <div>
         <table class="page-table">
             <thead>

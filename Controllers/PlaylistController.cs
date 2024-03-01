@@ -22,4 +22,22 @@ public static class PlaylistController
         
         return ret;
     }
+
+    public static List<Song> GetSongsFromPlaylist(Playlist playlist)
+    {
+        DirectoryInfo dir = new DirectoryInfo(playlist.location);
+
+        List<Song> songs = new();
+        foreach(FileInfo file in dir.GetFiles())
+        {
+            songs.Add(new Song(file.Name, file.FullName));
+        }
+
+        return songs;
+    }
+
+    public static void CreatePlaylist(dynamic data)
+    {
+        Directory.CreateDirectory("./" + data.name);
+    }
 }

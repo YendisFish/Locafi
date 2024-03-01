@@ -1,15 +1,7 @@
 ﻿using PhotinoNET;
-using System;
-using System.Drawing;
-using System.IO;
-using System.Net.WebSockets;
-using System.Text;
-using Microsoft.AspNetCore;
-using System.ComponentModel;
-using System.Text;
 using Locafi.Controllers;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Builder;
+using Locafi.Middleware;
+using Locafi.Models;
 
 namespace Locafi
 {
@@ -20,6 +12,11 @@ namespace Locafi
         [STAThread]
         static void Main(string[] args)
         {
+            if ((new DirectoryInfo(Directory.GetCurrentDirectory())).GetDirectories().Where(x => x.Name.Contains("yt-dl")).Count() < 1)
+            {
+                YoutubeController.DownloadDependencies().GetAwaiter().GetResult();
+            }
+
             Thread tr = new Thread(new ThreadStart(WebHostMain));
             tr.Start();
             
@@ -93,6 +90,9 @@ namespace Locafi
             });
 
             app.MapGet("/GET_PLAYLST_LIST", () => PlaylistController.GetPlaylists());
+            app.MapPost("/DOWNLOAD", (YoutubeDownloadInfo info) => YoutubeController.DownloadVideo(new(info.link, null, null)));
+            app.MapPost("/CREATE_PLAYLIST", (object data) => PlaylistController.CreatePlaylist(data));
+            app.MapPost("/GET_PLAYLIST_SONGS", (Playlist playlist) => PlaylistController.GetSongsFromPlaylist(playlist));
             
             app.MapControllers();
 
@@ -108,3 +108,5 @@ namespace Locafi
         } 
     }
 }
+
+public record YoutubeDownloadInfo(string link);

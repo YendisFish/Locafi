@@ -1,6 +1,7 @@
 <script>
 	import PlayBar from './Components/PlayBar.svelte';
 	import MainPage from './Components/MainPage.svelte'
+	import InputComponent from './Components/InputComponent.svelte';
 	import axios from "axios";
 
 	let playlists = [{name:"balls"}];
@@ -18,12 +19,12 @@
 
 <main>
 	<script src="app://dynamic.js"></script>
-
-	{#each playlists as playlist}
-		<p>{playlist.name} AAAAAAAAA</p>
-	{/each}
 	
-	<button on:click={getPlaylists}>Get Playlists</button>
+	<MainPage></MainPage>
+
+	<div class="playbar">
+		<PlayBar></PlayBar>
+	</div>
 </main>
 
 <style>
@@ -32,5 +33,9 @@
 		bottom: 0;
 		left: 0;
 		/*z-index: 10;*/
+	}
+	
+	* {
+		user-select: none;
 	}
 </style>

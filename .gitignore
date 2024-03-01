@@ -3,6 +3,9 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+ffmpeg*
+yt-dlp*
+
 # dotenv files
 .env
 
