@@ -3,6 +3,7 @@
     let songList = [ { name:"Some Song", path:"./someplaylist" }, { name:"Other Song", path:"./someplaylist"} ];
     
     function setAndGetPlaylist(playlist) {
+        
         currentPlaylist = playlist;
     }
 </script>

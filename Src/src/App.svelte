@@ -1,22 +1,29 @@
 <script>
 	import PlayBar from './Components/PlayBar.svelte';
 	import MainPage from './Components/MainPage.svelte'
+	import axios from "axios";
 
+	let playlists = [{name:"balls"}];
+	
 	let inSettings = false;
 	
 	function toggleSettings() {
 		inSettings = !inSettings;
 	}
+	
+	async function getPlaylists() {
+		playlists = (await axios.get("http://localhost:5000/GET_PLAYLST_LIST")).data;
+	}
 </script>
 
 <main>
 	<script src="app://dynamic.js"></script>
+
+	{#each playlists as playlist}
+		<p>{playlist.name} AAAAAAAAA</p>
+	{/each}
 	
-	<MainPage></MainPage>
-	
-	<div class="playbar">
-		<PlayBar></PlayBar>
-	</div>
+	<button on:click={getPlaylists}>Get Playlists</button>
 </main>
 
 <style>

@@ -2,15 +2,27 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Net.WebSockets;
 using System.Text;
+using Microsoft.AspNetCore;
+using System.ComponentModel;
+using System.Text;
+using Locafi.Controllers;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Builder;
 
-namespace HelloPhotinoApp
+namespace Locafi
 {
     class Program
     {
+        public static volatile bool IsRunning = true;
+        
         [STAThread]
         static void Main(string[] args)
         {
+            Thread tr = new Thread(new ThreadStart(WebHostMain));
+            tr.Start();
+            
             // Window title declared here for visibility
             string windowTitle = "Locafi";
 
@@ -54,6 +66,45 @@ namespace HelloPhotinoApp
                 .Load("wwwroot/index.html"); // Can be used with relative path strings or "new URI()" instance to load a website.
 
             window.WaitForClose(); // Starts the application event loop
+            
+            IsRunning = false;
         }
+
+        static void WebHostMain()
+        {
+            var builder = WebApplication.CreateBuilder();
+            
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddControllers();
+            //builder.Services.AddSwaggerGen();
+
+            IServiceCollection services = builder.Services;
+
+            var app = builder.Build();
+
+            //app.UseSwagger();
+            //app.UseSwaggerUI();
+
+            app.UseCors(x =>
+            {
+                x.AllowAnyHeader();
+                x.AllowAnyOrigin();
+                x.AllowAnyMethod();
+            });
+
+            app.MapGet("/GET_PLAYLST_LIST", () => PlaylistController.GetPlaylists());
+            
+            app.MapControllers();
+
+            Thread tr = new(new ThreadStart(app.Run));
+            tr.Start();
+
+            while (IsRunning) ;
+
+            lock (app)
+            {
+                app.StopAsync().GetAwaiter().GetResult();
+            }
+        } 
     }
 }
