@@ -1,16 +1,32 @@
 ﻿<script>
     import axios from "axios";
     import DownloadMenu from './DownloadMenu.svelte';
+    import { currentPlaylist } from "../globals.js";
 
     let mode = "DEFAULT";
     let addSong = false;
     
-    let currentPlaylist = "";
-    let songList = [ { name:"Some Song", path:"./someplaylist" }, { name:"Other Song", path:"./someplaylist"} ];
+    let songList = getPlaylistSongs();
     
-    function setAndGetPlaylist(playlist) {
-        currentPlaylist = playlist;
+    async function setAndGetPlaylist(playlist) {
+        currentPlaylist.set(playlist);
+        await getPlaylistSongs();
     }
+    
+    async function getPlaylistSongs() {
+        songList = (await axios.post("http://localhost:5000/GET_PLAYLIST_SONGS", selectedPlaylist)).data;
+    }
+
+    // Subscribe to the store to get its current value
+    let selectedPlaylist = null;
+
+    // Subscribe to changes in the globalVariable
+    currentPlaylist.subscribe(value => {
+        if(value != selectedPlaylist) {
+            selectedPlaylist = value;
+            getPlaylistSongs()
+        }
+    });
 </script>
 
 <style>
@@ -70,34 +86,36 @@
 
 <div class="main-page">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    
-    <div class="download-menu">
-        {#if addSong}
-            <DownloadMenu />
-            <button on:click={() => addSong = !addSong}>Cancel</button>
-        {:else}
-            <button on:click={() => addSong = !addSong} style="margin-top: 15px">Add Song</button>
-        {/if}
-    </div>
-    
-    <div>
-        <table class="page-table">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Duration</th>
-                <th>Location</th>
-            </tr>
-            </thead>
-            <tbody>
-            {#each songList as song}
-                <tr class="song">
-                    <td>{song.name}</td>
-                    <td>0</td>
-                    <td>{song.path}</td>
+
+    {#if selectedPlaylist != null}
+        <div class="download-menu">
+            {#if addSong}
+                <DownloadMenu />
+                <button on:click={() => addSong = !addSong}>Cancel</button>
+            {:else}
+                <button on:click={() => addSong = !addSong} style="margin-top: 15px">Add Song</button>
+            {/if}
+        </div>
+
+        <div>
+            <table class="page-table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Duration</th>
+                    <th>Location</th>
                 </tr>
-            {/each}
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                {#each songList as song}
+                    <tr class="song">
+                        <td>{song.name}</td>
+                        <td>0</td>
+                        <td>{song.location}</td>
+                    </tr>
+                {/each}
+                </tbody>
+            </table>
+        </div>
+    {/if}
 </div>

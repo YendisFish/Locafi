@@ -1,7 +1,8 @@
 ﻿<script>
     import axios from "axios";
+    import { currentPlaylist } from "../globals.js";
 
-    export let playlists = [ { name: "Playlist 1", location: "" }, { name: "Playlist 2", location: "" } ];
+    export let playlists = [];
     getPlaylists();
 
     let playlistNameInput = "";
@@ -22,6 +23,10 @@
     
     async function toggleShowPlaylist() {
         showCreatePlaylist = !showCreatePlaylist;
+    }
+    
+    async function selectPlaylist(playlist) {
+        currentPlaylist.set(playlist);
     }
 </script>
 
@@ -59,7 +64,8 @@
     .playlist-element {
         width: 17vw;
         padding: 2% 2% 2% 5%;
-        word-wrap: break-word;
+        overflow: hidden;
+        white-space: nowrap;
     }
     
     .create-playlist {
@@ -87,7 +93,7 @@
     <table class="page-table">
         {#each playlists as playlist}
             <tr>
-                <div class="playlist-element">
+                <div class="playlist-element" on:click={async () => await selectPlaylist(playlist)}>
                     <p>{playlist.name}</p>
                 </div>
             </tr>

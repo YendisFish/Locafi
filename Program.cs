@@ -93,7 +93,7 @@ namespace Locafi
             });
 
             app.MapGet("/GET_PLAYLST_LIST", () => PlaylistController.GetPlaylists());
-            app.MapPost("/DOWNLOAD", (YoutubeDownloadInfo info) => YoutubeController.DownloadVideo(new(info.link, null, null)));
+            app.MapPost("/DOWNLOAD", (YoutubeDownloadInfo info) => YoutubeController.DownloadVideo(new(info.link, null, null, info.playlist)));
             app.MapPost("/CREATE_PLAYLIST", (CreatePlaylistData data) => PlaylistController.CreatePlaylist(data));
             app.MapPost("/GET_PLAYLIST_SONGS", (Playlist playlist) => PlaylistController.GetSongsFromPlaylist(playlist));
             

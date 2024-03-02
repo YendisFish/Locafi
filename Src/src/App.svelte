@@ -4,7 +4,7 @@
 	import InputComponent from './Components/InputComponent.svelte';
 	import axios from "axios";
 	import PlaylistTab from "./Components/PlaylistTab.svelte";
-
+	
 	let playlists = [{name:"balls"}];
 	
 	let inSettings = false;

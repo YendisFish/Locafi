@@ -1,6 +1,7 @@
 ﻿<script>
     import InputComponent from "./InputComponent.svelte";
     import axios from "axios";
+    import { currentPlaylist } from "../globals.js";
 
     let linkText = "";
     
@@ -9,8 +10,15 @@
     }
 
     async function download() {
-        let res = await axios.post("http://localhost:5000/DOWNLOAD", { link: linkText });
+        let res = await axios.post("http://localhost:5000/DOWNLOAD", { link: linkText, playlist: selectedPlaylist });
     }
+
+    let selectedPlaylist = null;
+
+    // Subscribe to changes in the globalVariable
+    currentPlaylist.subscribe(value => {
+        selectedPlaylist = value;
+    });
 </script>
 
 <style>
