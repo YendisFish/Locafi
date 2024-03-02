@@ -32,7 +32,7 @@
     /* Apply styles to the table */
     table {
         border-collapse: collapse; /* Collapse borders */
-        width: 100%; /* Set width to 100% of container */
+        width: 98.5%; /* Set width to 100% of container */
     }
 
     /* Apply styles to table headers */

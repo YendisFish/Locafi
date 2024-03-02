@@ -3,6 +3,7 @@
 	import MainPage from './Components/MainPage.svelte'
 	import InputComponent from './Components/InputComponent.svelte';
 	import axios from "axios";
+	import PlaylistTab from "./Components/PlaylistTab.svelte";
 
 	let playlists = [{name:"balls"}];
 	
@@ -20,10 +21,14 @@
 <main>
 	<script src="app://dynamic.js"></script>
 	
-	<MainPage></MainPage>
+	<div class="playlist">
+		<PlaylistTab />
+	</div>
+	
+	<MainPage />
 
 	<div class="playbar">
-		<PlayBar></PlayBar>
+		<PlayBar />
 	</div>
 </main>
 
@@ -32,7 +37,12 @@
 		position: fixed;
 		bottom: 0;
 		left: 0;
-		/*z-index: 10;*/
+		z-index: 3;
+	}
+
+	.playlist {
+		position: fixed;
+		z-index: 2;
 	}
 	
 	* {

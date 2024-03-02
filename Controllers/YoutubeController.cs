@@ -1,4 +1,5 @@
 ﻿using YoutubeDLSharp;
+using YoutubeDLSharp.Options;
 
 namespace Locafi.Middleware;
 
@@ -13,8 +14,9 @@ public static class YoutubeController
     public static async Task DownloadVideo(VideoDownloadSettings settings)
     {
         YoutubeDL dl = new YoutubeDL();
-        RunResult<string>? res = await dl.RunAudioDownload(settings.url) ?? throw new NullReferenceException();
+        RunResult<string>? res = await dl.RunAudioDownload(settings.url, AudioConversionFormat.Mp3) ?? throw new NullReferenceException();
     }
 }
 
 public record VideoDownloadSettings(string url, int? start, int? end);
+public record YoutubeDownloadInfo(string link);

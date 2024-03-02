@@ -36,8 +36,10 @@ public static class PlaylistController
         return songs;
     }
 
-    public static void CreatePlaylist(dynamic data)
+    public static void CreatePlaylist(CreatePlaylistData data)
     {
-        Directory.CreateDirectory("./" + data.name);
+        Directory.CreateDirectory("./playlists/" + data.name);
     }
 }
+
+public record CreatePlaylistData(string name);

@@ -8,6 +8,7 @@ namespace Locafi
     class Program
     {
         public static volatile bool IsRunning = true;
+        public static volatile bool ApiStarted = false;
         
         [STAThread]
         static void Main(string[] args)
@@ -19,6 +20,8 @@ namespace Locafi
 
             Thread tr = new Thread(new ThreadStart(WebHostMain));
             tr.Start();
+
+            while (!ApiStarted) ;
             
             // Window title declared here for visibility
             string windowTitle = "Locafi";
@@ -91,7 +94,7 @@ namespace Locafi
 
             app.MapGet("/GET_PLAYLST_LIST", () => PlaylistController.GetPlaylists());
             app.MapPost("/DOWNLOAD", (YoutubeDownloadInfo info) => YoutubeController.DownloadVideo(new(info.link, null, null)));
-            app.MapPost("/CREATE_PLAYLIST", (object data) => PlaylistController.CreatePlaylist(data));
+            app.MapPost("/CREATE_PLAYLIST", (CreatePlaylistData data) => PlaylistController.CreatePlaylist(data));
             app.MapPost("/GET_PLAYLIST_SONGS", (Playlist playlist) => PlaylistController.GetSongsFromPlaylist(playlist));
             
             app.MapControllers();
@@ -99,6 +102,7 @@ namespace Locafi
             Thread tr = new(new ThreadStart(app.Run));
             tr.Start();
 
+            ApiStarted = true;
             while (IsRunning) ;
 
             lock (app)
@@ -108,5 +112,3 @@ namespace Locafi
         } 
     }
 }
-
-public record YoutubeDownloadInfo(string link);
