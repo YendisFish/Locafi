@@ -16,6 +16,10 @@
     async function getPlaylistSongs() {
         songList = (await axios.post("http://localhost:5000/GET_PLAYLIST_SONGS", selectedPlaylist)).data;
     }
+    
+    async function onDownload() {
+        await setAndGetPlaylist(selectedPlaylist);
+    }
 
     // Subscribe to the store to get its current value
     let selectedPlaylist = null;
@@ -90,7 +94,7 @@
     {#if selectedPlaylist != null}
         <div class="download-menu">
             {#if addSong}
-                <DownloadMenu />
+                <DownloadMenu onDownload="{onDownload}" />
                 <button on:click={() => addSong = !addSong}>Cancel</button>
             {:else}
                 <button on:click={() => addSong = !addSong} style="margin-top: 15px">Add Song</button>

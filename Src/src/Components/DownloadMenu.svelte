@@ -3,6 +3,8 @@
     import axios from "axios";
     import { currentPlaylist } from "../globals.js";
 
+    export let onDownload;
+    
     let linkText = "";
     
     function onChangeInput(e) {
@@ -11,6 +13,7 @@
 
     async function download() {
         let res = await axios.post("http://localhost:5000/DOWNLOAD", { link: linkText, playlist: selectedPlaylist });
+        await onDownload();
     }
 
     let selectedPlaylist = null;
