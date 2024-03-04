@@ -9,11 +9,11 @@
     let showCreatePlaylist = false;
     
     async function getPlaylists() {
-        playlists = (await axios.get("http://localhost:5000/GET_PLAYLST_LIST")).data;
+        playlists = (await axios.get("http://localhost:5000/playlist/GET_PLAYLIST_LIST")).data;
     }
     
     async function createPlaylist() {
-        let res = await axios.post("http://localhost:5000/CREATE_PLAYLIST", { name: playlistNameInput });
+        let res = await axios.post("http://localhost:5000/playlist/CREATE_PLAYLIST", { name: playlistNameInput });
         await getPlaylists();
     }
     

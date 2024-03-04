@@ -20,14 +20,16 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Newtonsoft.json" Version="13.0.3" />
     <PackageReference Include="Photino.NET" Version="2.3.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="YoutubeDLSharp" Version="1.1.0" />
   </ItemGroup>
   
   <ItemGroup>
-    <Folder Include="playlists\hi\" />
-    <Folder Include="playlists\some playlist\" />
+    <Folder Include="playlists\" />
+    <Folder Include="playlists\balls\" />
     <Folder Include="Src\" />
     <Folder Include="wwwroot\assets\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,15 @@
 ﻿using Locafi.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Locafi.Controllers;
 
-public static class PlaylistController
+[ApiController]
+[Route("/playlist")]
+public class PlaylistController : ControllerBase
 {
-    public static List<Playlist> GetPlaylists()
+    [HttpGet]
+    [Route("/playlist/GET_PLAYLIST_LIST")]
+    public List<Playlist> GetPlaylists()
     {
         if (!Directory.Exists("./playlists"))
         {
@@ -23,7 +28,9 @@ public static class PlaylistController
         return ret;
     }
 
-    public static List<Song> GetSongsFromPlaylist(Playlist playlist)
+    [HttpPost]
+    [Route("/playlist/GET_PLAYLIST_SONGS")]
+    public List<Song> GetSongsFromPlaylist(Playlist playlist)
     {
         DirectoryInfo dir = new DirectoryInfo(playlist.location);
 
@@ -36,7 +43,9 @@ public static class PlaylistController
         return songs;
     }
 
-    public static void CreatePlaylist(CreatePlaylistData data)
+    [HttpPost]
+    [Route("/playlist/CREATE_PLAYLIST")]
+    public void CreatePlaylist(CreatePlaylistData data)
     {
         Directory.CreateDirectory("./playlists/" + data.name);
     }

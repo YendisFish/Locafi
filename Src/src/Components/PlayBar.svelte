@@ -1,8 +1,26 @@
 ﻿<script>
-    let isPlaying = false;
+    import {playSong, pauseSong} from "../audioController.js";
+    import {currentSong, isPlaying} from "../globals.js";
     
-    function togglePlay() {
-        isPlaying = !isPlaying;
+    let playing = false;
+    isPlaying.subscribe(value => {
+        playing = value;
+    });
+    
+    async function togglePlay() {
+        isPlaying.set(!playing);
+        
+        try {
+            if(playing) {
+                await playSong();
+            }
+
+            if(!playing) {
+                await pauseSong();
+            }
+        } catch(e) {
+            console.log(e);
+        }
     }
 </script>
 
@@ -25,7 +43,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     
     <div style="padding: 5px">
-        {#if isPlaying}
+        {#if playing}
         <i on:click="{togglePlay}" class='bx bx-pause-circle bx-md color-green'></i>
         {:else}
         <i on:click="{togglePlay}" class='bx bx-play-circle bx-md color-green'></i>

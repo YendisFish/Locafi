@@ -15,6 +15,7 @@
     "axios": "^1.6.7",
     "boostrap": "^2.0.0",
     "boxicons": "^2.1.4",
+    "howler": "^2.2.4",
     "rollup": "^3.29.4",
     "rollup-plugin-css-only": "^4.3.0",
     "rollup-plugin-livereload": "^2.0.0",

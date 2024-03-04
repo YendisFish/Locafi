@@ -6,13 +6,18 @@
     export let onDownload;
     
     let linkText = "";
+    let nameText = "";
     
     function onChangeInput(e) {
         linkText = e.target.value;
     }
+    
+    function onChangeName(e) {
+        nameText = e.target.value;
+    }
 
     async function download() {
-        let res = await axios.post("http://localhost:5000/DOWNLOAD", { link: linkText, playlist: selectedPlaylist });
+        let res = await axios.post("http://localhost:5000/DOWNLOAD", { link: linkText, playlist: selectedPlaylist, name: nameText });
         await onDownload();
     }
 
@@ -31,5 +36,7 @@
 <div class="download-menu">
     <p style="color:white">Dowload</p>
     <InputComponent onChange="{onChangeInput}"/>
+    <p style="color:white">Name</p>
+    <InputComponent onChange="{onChangeName}"/>
     <button on:click={download}>Download</button>
 </div>

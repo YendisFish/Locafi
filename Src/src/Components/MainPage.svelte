@@ -2,6 +2,7 @@
     import axios from "axios";
     import DownloadMenu from './DownloadMenu.svelte';
     import { currentPlaylist } from "../globals.js";
+    import Song from "./Song.svelte";
 
     let mode = "DEFAULT";
     let addSong = false;
@@ -14,7 +15,7 @@
     }
     
     async function getPlaylistSongs() {
-        songList = (await axios.post("http://localhost:5000/GET_PLAYLIST_SONGS", selectedPlaylist)).data;
+        songList = (await axios.post("http://localhost:5000/playlist/GET_PLAYLIST_SONGS", selectedPlaylist)).data;
     }
     
     async function onDownload() {
@@ -113,9 +114,7 @@
                 <tbody>
                 {#each songList as song}
                     <tr class="song">
-                        <td>{song.name}</td>
-                        <td>0</td>
-                        <td>{song.location}</td>
+                        <Song song={song} />
                     </tr>
                 {/each}
                 </tbody>

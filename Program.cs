@@ -76,14 +76,14 @@ namespace Locafi
             
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddControllers();
-            //builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen();
 
             IServiceCollection services = builder.Services;
 
             var app = builder.Build();
 
-            //app.UseSwagger();
-            //app.UseSwaggerUI();
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseCors(x =>
             {
@@ -91,11 +91,9 @@ namespace Locafi
                 x.AllowAnyOrigin();
                 x.AllowAnyMethod();
             });
-
-            app.MapGet("/GET_PLAYLST_LIST", () => PlaylistController.GetPlaylists());
-            app.MapPost("/DOWNLOAD", (YoutubeDownloadInfo info) => YoutubeController.DownloadVideo(new(info.link, null, null, info.playlist)));
-            app.MapPost("/CREATE_PLAYLIST", (CreatePlaylistData data) => PlaylistController.CreatePlaylist(data));
-            app.MapPost("/GET_PLAYLIST_SONGS", (Playlist playlist) => PlaylistController.GetSongsFromPlaylist(playlist));
+            
+            app.MapPost("/DOWNLOAD", (YoutubeDownloadInfo info) => 
+                YoutubeController.DownloadVideo(new(info.link, null, null, info.playlist, info.name)));
             
             app.MapControllers();
 
