@@ -92,6 +92,7 @@ namespace Locafi
             
             app.MapPost("/DOWNLOAD", (YoutubeDownloadInfo info) => 
                 YoutubeController.DownloadVideo(new(info.link, null, null, info.playlist, info.name)));
+            app.MapPost("/DOWNLOAD_PLAYLIST", (PlaylistDownloadInfo info) => YoutubeController.DownloadPlaylist(info));
             
             app.MapControllers();
 
