@@ -1,7 +1,7 @@
 ﻿<script>
     import axios from "axios";
     import DownloadMenu from './DownloadMenu.svelte';
-    import { currentPlaylist, currentSongList } from "../globals.js";
+    import { currentPlaylist } from "../globals.js";
     import Song from "./Song.svelte";
 
     let mode = "DEFAULT";
@@ -30,7 +30,7 @@
     currentPlaylist.subscribe(value => {
         if(value != selectedPlaylist) {
             selectedPlaylist = value;
-            getPlaylistSongs()
+            getPlaylistSongs();
         }
     });
 </script>

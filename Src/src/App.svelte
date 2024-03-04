@@ -5,10 +5,18 @@
 	import axios from "axios";
 	import PlaylistTab from "./Components/PlaylistTab.svelte";
 	import SongInfo from "./Components/SongInfo.svelte";
-	
+	import {currentSongList} from "./globals.js";
+
 	let playlists = [{name:"balls"}];
 	
 	let inSettings = false;
+	
+	
+	currentSongList.subscribe(value => {
+		if(value) {
+			console.log(JSON.stringify(value));
+		}
+	})
 	
 	function toggleSettings() {
 		inSettings = !inSettings;

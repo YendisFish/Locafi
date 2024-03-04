@@ -22,6 +22,7 @@
     });
     
     async function getPlaylistSongs() {
+        console.log("im the issue SONG.SVELTE, GETPLAYLISTSONGS");
         currentSongList.set((await axios.post("http://localhost:5000/playlist/GET_PLAYLIST_SONGS", playlist)).data);
     }
     

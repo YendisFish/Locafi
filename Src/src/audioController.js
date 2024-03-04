@@ -37,7 +37,7 @@ let selectedPlaylist = null;
 currentPlaylist.subscribe(value => {
     if(value != selectedPlaylist) {
         selectedPlaylist = value;
-        getPlaylistSongs();
+        //getPlaylistSongs();
     }
 });
 
@@ -46,9 +46,11 @@ currentTime.subscribe(value => {
     cTime = value;
 });
 
+/*
 async function getPlaylistSongs() {
+    console.log("im the issue AUDIOCONTROLLER.SVELTE, GETPLAYLISTSONGS");
     currentSongList.set((await axios.post("http://localhost:5000/playlist/GET_PLAYLIST_SONGS", selectedPlaylist)).data);
-}
+}*/
 
 async function setCurrentSong(song) {
     if(!selectedSong) {

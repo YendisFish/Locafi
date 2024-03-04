@@ -94,7 +94,7 @@
     <table class="page-table">
         {#each playlists as playlist}
             <tr>
-                <div class="playlist-element" on:click={async () => await selectPlaylist(playlist)}>
+                <div class="playlist-element" on:click={() => selectPlaylist(playlist)}>
                     <p>{playlist.name}</p>
                 </div>
             </tr>
