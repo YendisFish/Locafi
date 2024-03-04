@@ -1,10 +1,11 @@
 cd ./Src
-npm run build
+call npm i
+call npm run build
 cd ..
 
 dotnet build
 
-rm ./bin/Debug/net6.0/wwwroot
-mv ./wwwroot ./bin/Debug/net6.0/
+rmdir ./bin/Debug/net6.0/wwwroot
+move ./wwwroot ./bin/Debug/net6.0/
 
 echo finishing
