@@ -1,10 +1,16 @@
 ﻿<script>
-    import {playSong, pauseSong} from "../audioController.js";
+    import {playSong, pauseSong, setVolume} from "../audioController.js";
     import {currentSong, isPlaying} from "../globals.js";
-    
+    import {currentVolume} from "../globals.js";
+
     let playing = false;
     isPlaying.subscribe(value => {
         playing = value;
+    });
+
+    let cVol = null;
+    currentVolume.subscribe(value => {
+        cVol = value;
     });
     
     async function togglePlay() {
@@ -22,6 +28,10 @@
             console.log(e);
         }
     }
+
+    async function updateVolume(e) {
+        await setVolume(e.target.valueAsNumber);
+    }
 </script>
 
 <style>
@@ -36,6 +46,13 @@
     .color-green {
         color: red;
     }
+    
+    .volume-meter {
+        position: fixed;
+        bottom: 0;
+        right: 5vw;
+        padding: 10px;
+    }
 </style>
 
 <div class="main-bar">
@@ -48,5 +65,9 @@
         {:else}
         <i on:click="{togglePlay}" class='bx bx-play-circle bx-md color-green'></i>
         {/if}
-    </div>    
+    </div>
+
+    <div class="volume-meter">
+        <input type="range" min="0" max="1" step="0.01" style="margin-left: 20vw; width: 200px" bind:value={cVol} on:change={updateVolume} />
+    </div>
 </div>

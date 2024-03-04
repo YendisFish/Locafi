@@ -2,5 +2,5 @@
 
 export const currentPlaylist = writable(null); //string
 export const currentSong = writable(null); //string
-export const currentVolume = writable(0.01); //int
+export const currentVolume = writable(0.25); //int
 export const isPlaying = writable(false); // bool

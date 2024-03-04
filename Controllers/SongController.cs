@@ -17,8 +17,8 @@ public class SongController : ControllerBase
     {
         try
         {
-            Song s = JsonConvert.DeserializeObject<Song>(song)!;
-
+            Song s = JsonConvert.DeserializeObject<Song>(HttpUtility.UrlDecode(song))!;
+            
             FileStream fs = System.IO.File.OpenRead(s.location);
             return new FileStreamResult(fs, "audio/mpeg");
         } catch (Exception ex) {

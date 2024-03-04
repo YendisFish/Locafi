@@ -30,7 +30,7 @@ export async function loadSong() {
         autoplay: true,
         format: ['mp3'],
         html5: true,
-        volume: cVol
+        volume: cVol,
     })
     
     player.set(howl);
