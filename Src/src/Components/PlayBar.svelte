@@ -1,6 +1,6 @@
 ﻿<script>
-    import {playSong, pauseSong, setVolume} from "../audioController.js";
-    import {currentSong, isPlaying} from "../globals.js";
+    import {playSong, pauseSong, setVolume, loadSong, stopSong} from "../audioController.js";
+    import {currentSong, isPlaying, currentSongList, currentTime} from "../globals.js";
     import {currentVolume} from "../globals.js";
 
     let playing = false;
@@ -31,6 +31,48 @@
 
     async function updateVolume(e) {
         await setVolume(e.target.valueAsNumber);
+    }
+
+    let selectedSong = null;
+    currentSong.subscribe(value => {
+        selectedSong = value;
+    });
+    
+    let selectedSongList = null;
+    currentSongList.subscribe(value => {
+       selectedSongList = value; 
+    });
+
+    async function setCurrentSong(song) {
+        if(!selectedSong) {
+            currentSong.set(song);
+            await loadSong();
+            await playSong();
+            await setVolume(0.25);
+        }
+
+        if(!playing && (song != selectedSong)) {
+            currentSong.set(song);
+            await stopSong();
+
+            await loadSong();
+            await playSong();
+            await setVolume(0.25);
+        }
+
+        if(song != selectedSong) {
+            currentSong.set(song);
+            await stopSong();
+
+            await loadSong();
+            await playSong();
+            await setVolume(0.25);
+        }
+    }
+    
+    async function skipCurrent() {
+        currentTime.set(0);
+        await setCurrentSong(selectedSongList[selectedSongList.indexOf(selectedSong) + 1]);
     }
 </script>
 
@@ -67,6 +109,8 @@
         {/if}
     </div>
 
+    <button on:click={skipCurrent}>Skip</button>
+    
     <div class="volume-meter">
         <input type="range" min="0" max="1" step="0.01" style="margin-left: 20vw; width: 200px" bind:value={cVol} on:change={updateVolume} />
     </div>

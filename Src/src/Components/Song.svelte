@@ -1,8 +1,10 @@
 ﻿<script>
-    import {currentSong, isPlaying} from "../globals.js";
+    import {currentPlaylist, currentSong, isPlaying, currentSongList} from "../globals.js";
     import {loadSong, playSong, pauseSong, stopSong, setVolume} from "../audioController.js";
+    import axios from "axios";
     
     export let song = null;
+    export let playlist = null;
 
     let playing = false;
     isPlaying.subscribe(value => {
@@ -13,8 +15,19 @@
     currentSong.subscribe(value => {
         selectedSong = value;
     });
+
+    let selectedSongList = null;
+    currentSongList.subscribe(value => {
+        selectedSongList = value;
+    });
+    
+    async function getPlaylistSongs() {
+        currentSongList.set((await axios.post("http://localhost:5000/playlist/GET_PLAYLIST_SONGS", playlist)).data);
+    }
     
     async function setCurrentSong() {
+        await getPlaylistSongs();
+        
         if(!selectedSong) {
             currentSong.set(song);
             await loadSong();

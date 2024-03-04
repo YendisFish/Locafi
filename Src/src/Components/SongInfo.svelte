@@ -1,4 +1,10 @@
 ﻿<script>
+    import {currentSong} from "../globals.js";
+    
+    let selectedSong = null;
+    currentSong.subscribe(value => {
+       selectedSong = value; 
+    });
 </script>
 
 <style>
@@ -38,5 +44,7 @@
 </style>
 
 <div class="song-info">
-
+    {#if selectedSong}
+        <p style="color: white;">{selectedSong.name}</p>
+    {/if}
 </div>

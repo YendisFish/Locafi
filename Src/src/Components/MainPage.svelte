@@ -1,7 +1,7 @@
 ﻿<script>
     import axios from "axios";
     import DownloadMenu from './DownloadMenu.svelte';
-    import { currentPlaylist } from "../globals.js";
+    import { currentPlaylist, currentSongList } from "../globals.js";
     import Song from "./Song.svelte";
 
     let mode = "DEFAULT";
@@ -114,7 +114,7 @@
                 </thead>
                 <tbody>
                 {#each songList as song}
-                    <Song class="song" song={song} />
+                    <Song class="song" song={song} playlist={selectedPlaylist} />
                 {/each}
                 </tbody>
             </table>
