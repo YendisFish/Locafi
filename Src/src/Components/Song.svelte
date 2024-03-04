@@ -49,12 +49,16 @@
         /*padding-left: 50px;
         padding-right: 50px;*/
     }
+
+    .song:nth-child(even) {
+        background-color: #202123;
+    }
 </style>
 
-<div on:click={setCurrentSong}>
+<tr class="song" on:click={setCurrentSong}>
     {#if song}
         <td>{song.name}</td>
         <td>0</td>
         <td>{song.location}</td>
     {/if}
-</div>
+</tr>

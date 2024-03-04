@@ -14,6 +14,7 @@
     
     async function createPlaylist() {
         let res = await axios.post("http://localhost:5000/playlist/CREATE_PLAYLIST", { name: playlistNameInput });
+        await toggleShowPlaylist();
         await getPlaylists();
     }
     

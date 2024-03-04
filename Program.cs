@@ -76,14 +76,14 @@ namespace Locafi
             
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddControllers();
-            builder.Services.AddSwaggerGen();
+            //builder.Services.AddSwaggerGen();
 
             IServiceCollection services = builder.Services;
 
             var app = builder.Build();
 
-            app.UseSwagger();
-            app.UseSwaggerUI();
+            //app.UseSwagger();
+            //app.UseSwaggerUI();
 
             app.UseCors(x =>
             {

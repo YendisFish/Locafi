@@ -6,6 +6,8 @@ downloaded locally. But it has a twist! Locafi also allows you to
 download youtube links as audio and listen to them. Although it is
 still in development, Locafi has a promising development path.
 
+CURRENT VERSION: ALPHA 1.0
+
 # Dependencies
 These are the dependencies you will need to build this project:
 

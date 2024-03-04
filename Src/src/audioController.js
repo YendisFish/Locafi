@@ -20,14 +20,19 @@ currentVolume.subscribe(value => {
 });
 
 export async function loadSong() {
+    if (playerVar) {
+        playerVar.unload();
+        console.log('ur mom');
+    }
+    
     let howl = new Howl({
         src: ["http://localhost:5000/song/GET_SONG_STREAM?song=" + JSON.stringify(selectedSong)],
         autoplay: true,
         format: ['mp3'],
-        enableRangeProcessing: false,
+        html5: true,
         volume: cVol
     })
-
+    
     player.set(howl);
 }
 
@@ -65,6 +70,16 @@ export async function setVolume(volume) {
     player.update(howl => {
         if (howl) {
             howl.volume(volume)
+        }
+        return howl;
+    });
+}
+
+export async function unloadSong() {
+    isPlaying.set(true);
+    player.update(howl => {
+        if (howl) {
+            Howler.unload();
         }
         return howl;
     });

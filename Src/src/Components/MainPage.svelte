@@ -20,6 +20,7 @@
     
     async function onDownload() {
         await setAndGetPlaylist(selectedPlaylist);
+        addSong = false;
     }
 
     // Subscribe to the store to get its current value
@@ -113,9 +114,7 @@
                 </thead>
                 <tbody>
                 {#each songList as song}
-                    <tr class="song">
-                        <Song song={song} />
-                    </tr>
+                    <Song class="song" song={song} />
                 {/each}
                 </tbody>
             </table>

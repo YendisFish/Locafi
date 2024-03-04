@@ -4,6 +4,7 @@
 	import InputComponent from './Components/InputComponent.svelte';
 	import axios from "axios";
 	import PlaylistTab from "./Components/PlaylistTab.svelte";
+	import SongInfo from "./Components/SongInfo.svelte";
 	
 	let playlists = [{name:"balls"}];
 	
@@ -27,6 +28,10 @@
 	
 	<MainPage />
 
+	<div class="songinfo">
+		<SongInfo />
+	</div>
+
 	<div class="playbar">
 		<PlayBar />
 	</div>
@@ -37,12 +42,16 @@
 		position: fixed;
 		bottom: 0;
 		left: 0;
-		z-index: 3;
+		z-index: 4;
 	}
 
 	.playlist {
 		position: fixed;
 		z-index: 2;
+	}
+	
+	.songinfo {
+		z-index: 3;
 	}
 	
 	* {

@@ -17,7 +17,7 @@
     }
 
     async function download() {
-        let res = await axios.post("http://localhost:5000/DOWNLOAD", { link: linkText, playlist: selectedPlaylist, name: nameText });
+        let res = await axios.post("http://localhost:5000/DOWNLOAD", { link: linkText, playlist: selectedPlaylist, name: nameText });   
         await onDownload();
     }
 
