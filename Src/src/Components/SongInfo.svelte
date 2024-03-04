@@ -45,6 +45,6 @@
 
 <div class="song-info">
     {#if selectedSong}
-        <p style="color: white;">{selectedSong.name}</p>
+        <p style="color: white;  padding: 8px">{selectedSong.name}</p>
     {/if}
 </div>
