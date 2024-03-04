@@ -1,4 +1,12 @@
-﻿import {currentPlaylist, currentSong, currentSongList, currentTime, currentVolume, isPlaying} from "./globals.js";
+﻿import {
+    currentDuration,
+    currentPlaylist,
+    currentSong,
+    currentSongList,
+    currentTime,
+    currentVolume,
+    isPlaying
+} from "./globals.js";
 import {writable} from "svelte/store";
 import {Howl, Howler} from "howler";
 import axios from "axios";
@@ -88,6 +96,8 @@ async function skipCurrent() {
     await setCurrentSong(selectedSongList[currentIndex + 1]);
 }
 
+let interval = null;
+
 export async function loadSong() {
     if (playerVar) {
         playerVar.unload();
@@ -99,7 +109,30 @@ export async function loadSong() {
         format: ['mp3'],
         html5: false,
         volume: cVol,
-        onend: skipCurrent
+        onend: () => {
+            clearInterval(interval);
+            skipCurrent();
+        },
+        onplay: () => {
+            howl.seek(cTime);
+            
+            interval = setInterval(() => {
+                currentTime.set(howl.seek());
+            }, 1000);
+            
+            currentDuration.set(howl.duration());
+        },
+        onstop: () => {
+            clearInterval(interval);
+            currentTime.set(0);
+        },
+        onload: () => {
+            clearInterval(interval);
+            currentTime.set(0);
+        },
+        onpause: () => {
+            clearInterval(interval);
+        }
     })
     
     player.set(howl);

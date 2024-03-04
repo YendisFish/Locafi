@@ -78,8 +78,6 @@ namespace Locafi
             builder.Services.AddControllers();
             //builder.Services.AddSwaggerGen();
 
-            IServiceCollection services = builder.Services;
-
             var app = builder.Build();
 
             //app.UseSwagger();

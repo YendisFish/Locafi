@@ -7,6 +7,7 @@
 
     let playlistNameInput = "";
     let showCreatePlaylist = false;
+    let showDownloadPlaylist = false;
     
     async function getPlaylists() {
         playlists = (await axios.get("http://localhost:5000/playlist/GET_PLAYLIST_LIST")).data;
@@ -18,8 +19,25 @@
         await getPlaylists();
     }
     
+    async function downloadPlaylist() {
+        let res = await axios.post("http://localhost:5000/playlist/DOWNLOAD_PLAYLIST", { link: downloadLink, name: downloadName });
+        showDownloadPlaylist = false;
+        await getPlaylists();
+    }
+    
     async function onCreateChange(e) {
         playlistNameInput = e.target.value;
+    }
+    
+    let downloadName = null;
+    let downloadLink = null;
+    
+    async function onDownloadNameChange(e) {
+        downloadName = e.target.value;
+    }
+    
+    async function onDownloadChange(e) {
+        downloadLink = e.target.value;
     }
     
     async function toggleShowPlaylist() {
@@ -89,6 +107,19 @@
         </div>
     {:else}
         <button on:click={toggleShowPlaylist} class="create-playlist-button">Create Playlist</button>
+    {/if}
+
+    {#if showDownloadPlaylist}
+        <div class="create-playlist">
+            <p>Enter Name:</p>
+            <input on:change={onDownloadNameChange} type="text" />
+            <p>Enter Link:</p>
+            <input on:change={onDownloadChange} type="text" />
+            <button on:click={downloadPlaylist}>Download</button>
+            <button on:click={() => showDownloadPlaylist = false}>Cancel</button>
+        </div>
+    {:else}
+        <button on:click={() => showDownloadPlaylist = true} class="create-playlist-button">Download Playlist</button>
     {/if}
     
     <table class="page-table">
