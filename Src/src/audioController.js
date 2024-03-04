@@ -78,9 +78,12 @@ async function setCurrentSong(song) {
 }
 
 async function skipCurrent() {
+    console.log(selectedSong.name);
+
     currentTime.set(0);
-    console.log(selectedSongList.indexOf(selectedSong) + 1);
-    await setCurrentSong(selectedSongList[selectedSongList.indexOf(selectedSong) + 1]);
+
+    let currentIndex = selectedSongList.findIndex(song => song.name === selectedSong.name);
+    await setCurrentSong(selectedSongList[currentIndex + 1]);
 }
 
 export async function loadSong() {
@@ -105,7 +108,6 @@ export async function playSong() {
     player.update(howl => {
         if (howl) {
             howl.play();
-            console.log(cTime);
             howl.seek(cTime);
         }
         return howl;

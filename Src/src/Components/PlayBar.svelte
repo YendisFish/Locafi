@@ -69,10 +69,14 @@
             await setVolume(0.25);
         }
     }
-    
+
     async function skipCurrent() {
+        console.log(selectedSong.name);
+
         currentTime.set(0);
-        await setCurrentSong(selectedSongList[selectedSongList.indexOf(selectedSong) + 1]);
+
+        let currentIndex = selectedSongList.findIndex(song => song.name === selectedSong.name);
+        await setCurrentSong(selectedSongList[currentIndex + 1]);
     }
 </script>
 
