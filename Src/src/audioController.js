@@ -65,7 +65,8 @@ async function setCurrentSong(song) {
         currentSong.set(song);
         await loadSong();
         await playSong();
-        await setVolume(0.25);
+
+        await setVolume(cVol);
     }
 
     if(!playing && (song != selectedSong)) {
@@ -74,7 +75,8 @@ async function setCurrentSong(song) {
 
         await loadSong();
         await playSong();
-        await setVolume(0.25);
+
+        await setVolume(cVol);
     }
 
     if(song != selectedSong) {
@@ -83,7 +85,8 @@ async function setCurrentSong(song) {
 
         await loadSong();
         await playSong();
-        await setVolume(0.25);
+
+        await setVolume(cVol);
     }
 }
 
@@ -112,26 +115,36 @@ export async function loadSong() {
         onend: () => {
             clearInterval(interval);
             skipCurrent();
+
+            howl.volume(cVol);
         },
         onplay: () => {
             howl.seek(cTime);
+
+            howl.volume(cVol);
             
             interval = setInterval(() => {
                 currentTime.set(howl.seek());
             }, 1000);
-            
+
             currentDuration.set(howl.duration());
         },
         onstop: () => {
             clearInterval(interval);
             currentTime.set(0);
+
+            howl.volume(cVol);
         },
         onload: () => {
             clearInterval(interval);
             currentTime.set(0);
+
+            howl.volume(cVol);
         },
         onpause: () => {
             clearInterval(interval);
+
+            howl.volume(cVol);
         }
     })
     
@@ -173,6 +186,7 @@ export async function stopSong() {
 }
 
 export async function setVolume(volume) {
+    currentVolume.set(volume);
     player.update(howl => {
         if (howl) {
             howl.volume(volume)

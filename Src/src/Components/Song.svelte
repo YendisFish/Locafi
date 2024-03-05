@@ -1,5 +1,5 @@
 ﻿<script>
-    import {currentPlaylist, currentSong, isPlaying, currentSongList} from "../globals.js";
+    import {currentPlaylist, currentSong, isPlaying, currentSongList, currentVolume} from "../globals.js";
     import {loadSong, playSong, pauseSong, stopSong, setVolume} from "../audioController.js";
     import axios from "axios";
     
@@ -20,29 +20,35 @@
     currentSongList.subscribe(value => {
         selectedSongList = value;
     });
-    
+
+    let cVol = null;
+    currentVolume.subscribe(value => {
+        cVol = value;
+    });
+
     async function getPlaylistSongs() {
-        console.log("im the issue SONG.SVELTE, GETPLAYLISTSONGS");
         currentSongList.set((await axios.post("http://localhost:5000/playlist/GET_PLAYLIST_SONGS", playlist)).data);
     }
     
     async function setCurrentSong() {
         await getPlaylistSongs();
-        
+
         if(!selectedSong) {
             currentSong.set(song);
             await loadSong();
             await playSong();
-            await setVolume(0.25);
+
+            await setVolume(cVol);
         }
-        
+
         if(!playing && (song != selectedSong)) {
             currentSong.set(song);
             await stopSong();
-            
+
             await loadSong();
             await playSong();
-            await setVolume(0.25);
+
+            await setVolume(cVol);
         }
 
         if(song != selectedSong) {
@@ -51,7 +57,8 @@
 
             await loadSong();
             await playSong();
-            await setVolume(0.25);
+
+            await setVolume(cVol);
         }
     }
 </script>
