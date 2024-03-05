@@ -32,7 +32,7 @@ public static class YoutubeController
 
     public static async Task DownloadPlaylist(PlaylistDownloadInfo data)
     {
-        Directory.CreateDirectory(Path.Join("./playlists/", data.name));
+        //Directory.CreateDirectory(Path.Join("./playlists/", data.name));
         
         YoutubeDL dl = new();
         dl.OutputFolder = Path.Join("./playlists/", data.name);
