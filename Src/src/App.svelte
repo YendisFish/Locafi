@@ -11,12 +11,11 @@
 	
 	let inSettings = false;
 	
-	
-	currentSongList.subscribe(value => {
-		if(value) {
-			console.log(JSON.stringify(value));
-		}
-	})
+	// currentSongList.subscribe(value => {
+	// 	if(value) {
+	// 		console.log(JSON.stringify(value));
+	// 	}
+	// })
 	
 	function toggleSettings() {
 		inSettings = !inSettings;

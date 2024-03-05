@@ -70,7 +70,8 @@
             currentSong.set(song);
             await loadSong();
             await playSong();
-            await setVolume(0.25);
+
+            await setVolume(cVol);
         }
 
         if(!playing && (song != selectedSong)) {
@@ -79,7 +80,8 @@
 
             await loadSong();
             await playSong();
-            await setVolume(0.25);
+
+            await setVolume(cVol);
         }
 
         if(song != selectedSong) {
@@ -88,7 +90,8 @@
 
             await loadSong();
             await playSong();
-            await setVolume(0.25);
+
+            await setVolume(cVol);
         }
     }
 
