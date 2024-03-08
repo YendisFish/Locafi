@@ -24,7 +24,7 @@ public static class YoutubeController
     {
         YoutubeDL dl = new YoutubeDL();
         dl.OutputFolder = settings.playlist.location;
-        RunResult<string>? res = await dl.RunAudioDownload(settings.url, AudioConversionFormat.Mp3) ?? throw new NullReferenceException();
+        RunResult<string>? res = await dl.RunAudioDownload(settings.url, AudioConversionFormat.Mp3) ?? throw new NullReferenceException(); //todo implement FLAC
         
         File.Copy(res.Data, Path.Join((new FileInfo(res.Data)).DirectoryName, settings.name));
         File.Delete(res.Data);
@@ -36,7 +36,7 @@ public static class YoutubeController
         
         YoutubeDL dl = new();
         dl.OutputFolder = Path.Join("./playlists/", data.name);
-        RunResult<string[]>? res = await dl.RunAudioPlaylistDownload(data.link, format: AudioConversionFormat.Mp3, progress: YoutubeController.Progress) 
+        RunResult<string[]>? res = await dl.RunAudioPlaylistDownload(data.link, format: AudioConversionFormat.Mp3, progress: YoutubeController.Progress) //todo implement FLAC
                                    ?? throw new NullReferenceException();
     }
 
